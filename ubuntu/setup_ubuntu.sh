@@ -22,8 +22,8 @@ function cleanup {
 
 #Hostname
 function hostname {
-    echo "$1" | sudo tee --append /etc/hostname
-    echo "127.0.0.1 $1" | sudo tee --append  /etc/hosts
+    echo "$1" | sudo tee /etc/hostname
+    echo "127.0.0.1 $1" | sudo tee --append /etc/hosts
 }
 
 #Apt Update
