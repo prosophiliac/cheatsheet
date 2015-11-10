@@ -80,9 +80,10 @@ function node {
   wget  http://nodejs.org/dist/$NPMVersion/node-$NPMVersion-linux-x64.tar.gz -P $HOME
   tar -xzvf $HOME/node-$NPMVersion-linux-x64.tar.gz -C $HOME
   rm $HOME/node-$NPMVersion-linux-x64.tar.gz
-  echo "export PATH=$HOME/node-$NPMVersion-linux-x64/bin:$PATH" >> $HOME/.bashrc
-  export PATH=$HOME/node-$NPMVersion-linux-x64/bin:$PATH
-
+  rm $HOME/node
+  ln -s $HOME/node-$NPMVersion-linux-x64 $HOME/node
+  echo "export PATH=$HOME/node/bin:$PATH" >> $HOME/.bashrc
+  export PATH=$HOME/node/bin:$PATH
 }
 
 #JHipster
@@ -91,11 +92,13 @@ function jhipster {
   npm install -g bower
   npm install -g grunt-cli
   npm install -g generator-jhipster
+  cd $HOME/node/lib/node_modules/generator-jhipster
+  npm install aws-sdk progress node-uuid
 }
 
 #Help Message
 function helpmessage {
-    echo "Usage : $0 [--unattendedupgrades] [--vim] [--cleanup] [--aptupdate] [--aptupgrade] [--java8] [--php5] [--git] [--mysql5 mysqlpassword] [--hostname subdomain.hostname.com] "
+    echo "Usage : $0 [--unattendedupgrades] [--vim] [--cleanup] [--aptupdate] [--aptupgrade] [--java8] [--php5] [--git] [--node] [--jhipster] [--mail] [--mysql5 mysqlpassword] [--hostname subdomain.hostname.com] "
 }
 
 
