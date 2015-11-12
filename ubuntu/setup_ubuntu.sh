@@ -1,5 +1,15 @@
 #!/bin/bash
 
+#Sonar
+function sonar {
+    echo -e "\ndeb http://downloads.sourceforge.net/project/sonar-pkg/deb binary/" \ | sudo tee -a /etc/apt/sources.list    
+    sudo apt-get update
+    sudo apt-get -y --force-yes install sonar
+    sudo sed -i '25 s/^#//' /opt/sonar/conf/sonar.properties 
+    sudo sed -i '14 s/^#//' /opt/sonar/conf/sonar.properties 
+    sudo sed -i "15 s/^$/sonar.jdbc.password=$2" /opt/sonar/conf/sonar.properties 
+}
+
 #Unattended Upgrades
 function unattendedupgrades {
     sudo apt-get -y install unattended-upgrades
@@ -11,7 +21,6 @@ function unattendedupgrades {
     sudo sed -i '2 s/0/1/' /etc/apt/apt.conf.d/10periodic
     sudo sed -i '3 s/0/7/' /etc/apt/apt.conf.d/10periodic
 }
-
 
 #Clean Up
 function cleanup {
@@ -101,7 +110,7 @@ function jhipster {
 
 #Help Message
 function helpmessage {
-    echo "Usage : $0 [--unattendedupgrades] [--vim] [--cleanup] [--aptupdate] [--aptupgrade] [--java8] [--php5] [--git] [--node] [--jhipster] [--mail] [--mysql5 mysqlpassword] [--hostname subdomain.hostname.com] "
+    echo "Usage : $0 [--unattendedupgrades] [--vim] [--cleanup] [--aptupdate] [--aptupgrade] [--java8] [--php5] [--git] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password]"
 }
 
 
@@ -120,6 +129,7 @@ while true; do
     --mail ) mail ; shift ;;
     --mysql5 ) mysql5 "$2"; shift 2 ;;
     --hostname ) hostname "$2"; shift 2 ;;
+    --sonar ) sonar $2; shift 2 ;;
     * ) helpmessage ; break ;;
   esac
 done
