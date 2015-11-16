@@ -1,5 +1,13 @@
 #!/bin/bash
 
+#AWS Cli
+function awscli {
+    curl -O https://bootstrap.pypa.io/get-pip.py
+    sudo -H python2.7 get-pip.py
+    rm get-pip.py
+    sudo -H pip install awscli        
+}
+
 #Sonar
 function sonar {
     echo -e "\ndeb http://downloads.sourceforge.net/project/sonar-pkg/deb binary/" \ | sudo tee -a /etc/apt/sources.list    
@@ -110,7 +118,7 @@ function jhipster {
 
 #Help Message
 function helpmessage {
-    echo "Usage : $0 [--unattendedupgrades] [--vim] [--cleanup] [--aptupdate] [--aptupgrade] [--java8] [--php5] [--git] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password]"
+    echo "Usage : $0 [--unattendedupgrades] [--vim] [--cleanup] [--aptupdate] [--aptupgrade] [--java8] [--php5] [--git] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password] [--awscli]"
 }
 
 
@@ -127,6 +135,7 @@ while true; do
     --node ) node ; shift ;;
     --jhipster ) jhipster ; shift ;;
     --mail ) mail ; shift ;;
+    --awscli ) awscli ; shift ;;
     --mysql5 ) mysql5 "$2"; shift 2 ;;
     --hostname ) hostname "$2"; shift 2 ;;
     --sonar ) sonar $2; shift 2 ;;
