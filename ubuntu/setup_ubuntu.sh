@@ -51,6 +51,7 @@ function aptupdate {
 #Vim
 function vim {
     sudo apt-get install -y vim
+    mkdir -p ~/.vim/bundle
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 
     wget https://raw.githubusercontent.com/sougat818/cheatsheet/master/vim/.vimrc -O $HOME/.vimrc
     command vim +PluginInstall +qall
