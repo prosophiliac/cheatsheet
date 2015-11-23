@@ -117,9 +117,19 @@ function jhipster {
   npm install aws-sdk progress node-uuid
 }
 
+#Arc
+function arc {
+    mkdir $HOME/ben10
+    cd $HOME/ben10
+    git clone https://github.com/phacility/libphutil.git
+    git clone https://github.com/phacility/arcanist.git
+    echo "export PATH=$HOME/ben10/arcanist/bin:$PATH" >> $HOME/.bashrc
+    cd
+}
+
 #Help Message
 function helpmessage {
-    echo "Usage : $0 [--unattendedupgrades] [--vim] [--cleanup] [--aptupdate] [--aptupgrade] [--java8] [--php5] [--git] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password] [--awscli]"
+    echo "Usage : $0 [--unattendedupgrades] [--vim] [--cleanup] [--aptupdate] [--aptupgrade] [--java8] [--php5] [--git] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password] [--awscli] [--arc]"
 }
 
 
@@ -137,6 +147,7 @@ while true; do
     --jhipster ) jhipster ; shift ;;
     --mail ) mail ; shift ;;
     --awscli ) awscli ; shift ;;
+    --arc ) arc ; shift;;
     --mysql5 ) mysql5 "$2"; shift 2 ;;
     --hostname ) hostname "$2"; shift 2 ;;
     --sonar ) sonar $2; shift 2 ;;
