@@ -119,12 +119,11 @@ function jhipster {
 
 #Arc
 function arc {
-    mkdir $HOME/ben10
-    cd $HOME/ben10
-    git clone https://github.com/phacility/libphutil.git
-    git clone https://github.com/phacility/arcanist.git
+    mkdir $HOME/ben10/libphutil
+    mkdir $HOME/ben10/arcanist
+    git clone https://github.com/phacility/libphutil.git $HOME/ben10/libphutil
+    git clone https://github.com/phacility/arcanist.git $HOME/ben10/arcanist
     echo "export PATH=$HOME/ben10/arcanist/bin:$PATH" >> $HOME/.bashrc
-    cd
 }
 
 #Help Message
