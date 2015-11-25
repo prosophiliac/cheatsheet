@@ -86,7 +86,7 @@ function mysql5 {
 }
 
 #Git
-function git {
+function git_install{
     sudo aptitude install -y git
 }
 
@@ -141,7 +141,7 @@ while true; do
     --aptupgrade ) aptupdate ;  aptupgrade; shift ;;
     --java8 ) java8 ; shift ;;
     --php5 ) php5; shift ;;
-    --git ) git; shift ;;
+    --git ) git_install; shift ;;
     --node ) node ; shift ;;
     --jhipster ) jhipster ; shift ;;
     --mail ) mail ; shift ;;
