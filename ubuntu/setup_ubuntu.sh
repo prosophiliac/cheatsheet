@@ -86,7 +86,7 @@ function mysql5 {
 }
 
 #Git
-function git_install{
+function git_install {
     sudo aptitude install -y git
 }
 
