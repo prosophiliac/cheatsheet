@@ -52,7 +52,7 @@ function aptupdate {
 function vim {
     sudo apt-get install -y vim
     mkdir -p ~/.vim/bundle
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 
+    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim 
     wget https://raw.githubusercontent.com/sougat818/cheatsheet/master/vim/.vimrc -O $HOME/.vimrc
     command vim +PluginInstall +qall
 }
@@ -124,6 +124,14 @@ function arc {
     git clone https://github.com/phacility/libphutil.git $HOME/ben10/libphutil
     git clone https://github.com/phacility/arcanist.git $HOME/ben10/arcanist
     echo "export PATH=$HOME/ben10/arcanist/bin:$PATH" >> $HOME/.bashrc
+}
+
+#GoogleChrome
+function installgooglechrome {
+	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+       sudo apt-get update
+       sudo apt-get install google-chrome-stable
 }
 
 #Help Message
