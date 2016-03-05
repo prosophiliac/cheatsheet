@@ -1,5 +1,14 @@
 #!/bin/bash
 
+#Install Dropbox
+function install_dropbox {
+    dropbox_version="2015.10.28_amd64"
+    wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_$dropbox_version.deb -O "$HOME/dropbox_$dropbox_version.deb"    
+    sudo dpkg -yi "$HOME/dropbox_$dropbox_version.deb"
+    sudo apt-get -y install -f
+    rm "$HOME/dropbox_$dropbox_version.deb"
+}
+
 #AWS Cli
 function awscli {
     curl -O https://bootstrap.pypa.io/get-pip.py
@@ -19,7 +28,7 @@ function sonar {
 }
 
 #Unattended Upgrades
-function unattendedupgrades {
+function unattended_upgrades {
     sudo apt-get -y install unattended-upgrades
     sudo dpkg-reconfigure -plow unattended-upgrades
     sudo sed -i '3 s/^/\n\/\//' /etc/apt/apt.conf.d/50unattended-upgrades
@@ -31,7 +40,7 @@ function unattendedupgrades {
 }
 
 #Clean Up
-function cleanup {
+function clean_up {
     sudo apt-get autoclean
     sudo apt-get autoremove
     sudo apt-get install
@@ -44,17 +53,18 @@ function hostname {
 }
 
 #Apt Update
-function aptupdate {
+function apt_update {
     sudo apt-get -y update
 }
 
 #Vim
-function vim {
+function install_vim {
+    install_git
     sudo apt-get install -y vim
     mkdir -p ~/.vim/bundle
-    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim 
-    wget https://raw.githubusercontent.com/sougat818/cheatsheet/master/vim/.vimrc -O $HOME/.vimrc
-    command vim +PluginInstall +qall
+    git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
+    wget https://raw.githubusercontent.com/sougat818/cheatsheet/master/vim/.vimrc -O "$HOME/.vimrc"
+    vim +PluginInstall +qall
 }
 
 #aptupgrade
@@ -86,8 +96,8 @@ function mysql5 {
 }
 
 #Git
-function git_install {
-    sudo aptitude install -y git
+function install_git {
+    sudo apt-get install -y git
 }
 
 #Mail
@@ -98,12 +108,12 @@ function mail {
 #Node
 function node {
   NPMVersion="v5.0.0";
-  wget  http://nodejs.org/dist/$NPMVersion/node-$NPMVersion-linux-x64.tar.gz -P $HOME
-  tar -xzvf $HOME/node-$NPMVersion-linux-x64.tar.gz -C $HOME
-  rm $HOME/node-$NPMVersion-linux-x64.tar.gz
-  rm $HOME/node
-  ln -s $HOME/node-$NPMVersion-linux-x64 $HOME/node
-  echo "export PATH=$HOME/node/bin:$PATH" >> $HOME/.bashrc
+  wget  "http://nodejs.org/dist/$NPMVersion/node-$NPMVersion-linux-x64.tar.gz" -P "$HOME"
+  tar -xzvf "$HOME/node-$NPMVersion-linux-x64.tar.gz" -C "$HOME"
+  rm "$HOME/node-$NPMVersion-linux-x64.tar.gz"
+  rm "$HOME/node"
+  ln -s "$HOME/node-$NPMVersion-linux-x64" "$HOME/node"
+  echo "export PATH=$HOME/node/bin:$PATH" >> "$HOME/.bashrc"
   export PATH=$HOME/node/bin:$PATH
 }
 
@@ -113,7 +123,7 @@ function jhipster {
   npm install -g bower
   npm install -g grunt-cli
   npm install -g generator-jhipster
-  cd $HOME/node/lib/node_modules/generator-jhipster
+  cd "$HOME/node/lib/node_modules/generator-jhipster" || exit
   npm install aws-sdk progress node-uuid
 }
 
@@ -121,43 +131,55 @@ function jhipster {
 function arc {
     mkdir $HOME/ben10/libphutil
     mkdir $HOME/ben10/arcanist
-    git clone https://github.com/phacility/libphutil.git $HOME/ben10/libphutil
-    git clone https://github.com/phacility/arcanist.git $HOME/ben10/arcanist
-    echo "export PATH=$HOME/ben10/arcanist/bin:$PATH" >> $HOME/.bashrc
+    git clone https://github.com/phacility/libphutil.git "$HOME/ben10/libphutil"
+    git clone https://github.com/phacility/arcanist.git "$HOME/ben10/arcanist"
+    echo "export PATH=$HOME/ben10/arcanist/bin:$PATH" >> "$HOME/.bashrc"
 }
 
 #GoogleChrome
-function installgooglechrome {
-	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-       sudo apt-get update
-       sudo apt-get install google-chrome-stable
+function install_google_chrome {
+    if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then 
+        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+    fi
+    sudo apt-get update
+    sudo apt-get -y install google-chrome-stable
 }
 
 #Help Message
 function helpmessage {
-    echo "Usage : $0 [--unattendedupgrades] [--vim] [--cleanup] [--aptupdate] [--aptupgrade] [--java8] [--php5] [--git] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password] [--awscli] [--arc]"
+    echo "Usage : "
+    echo "$0 --unattended_upgrades"
+    echo "$0 --install_google_chrome"
+    echo "$0 --install_vim"
+    echo "$0 --install_git"
+    echo "$0 --clean_up"
+    echo "$0 --apt_update"
+    echo "$0 --install_dropbox"
+    echo "$0 [--aptupgrade] [--java8] [--php5] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password] [--awscli] [--arc] "
 }
 
 
 while true; do
   case "$1" in
-    --unattendedupgrades ) unattendedupgrades ; shift ;;    
-    --vim ) vim ; shift ;;
-    --cleanup ) cleanup ; shift ;;
-    --aptupdate ) aptupdate ; shift ;;
-    --aptupgrade ) aptupdate ;  aptupgrade; shift ;;
-    --java8 ) java8 ; shift ;;
-    --php5 ) php5; shift ;;
-    --git ) git_install; shift ;;
-    --node ) node ; shift ;;
-    --jhipster ) jhipster ; shift ;;
-    --mail ) mail ; shift ;;
-    --awscli ) awscli ; shift ;;
-    --arc ) arc ; shift;;
-    --mysql5 ) mysql5 "$2"; shift 2 ;;
-    --hostname ) hostname "$2"; shift 2 ;;
-    --sonar ) sonar $2; shift 2 ;;
+    --unattended_upgrades ) unattended_upgrades ; shift;break ;;    
+    --install_dropbox ) install_dropbox ; shift ; break;;
+    --install_vim ) install_vim ; shift ; break;;
+    --clean_up ) clean_up ; shift;break ;;
+    --apt_update ) apt_update ; shift ;break;;
+    --aptupgrade ) aptupdate ;  aptupgrade; shift;break ;;
+    --java8 ) java8 ; shift;break ;;
+    --php5 ) php5; shift ;break;;
+    --install_git ) install_git; shift; break ;;
+    --node ) node ; shift ;break;;
+    --jhipster ) jhipster ; shift ;break;;
+    --mail ) mail ; shift;break ;;
+    --awscli ) awscli ; shift;break ;;
+    --arc ) arc ; shift;break;;
+    --install_google_chrome ) install_google_chrome ;  shift; break ;;
+    --mysql5 ) mysql5 "$2"; shift 2;break ;;
+    --hostname ) hostname "$2"; shift 2;break ;;
+    --sonar ) sonar "$2"; shift 2;break ;;
     * ) helpmessage ; break ;;
   esac
 done
