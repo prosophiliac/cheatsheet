@@ -1,5 +1,17 @@
 #!/bin/bash
 
+#Install Axel
+function install_axel {
+    sudo apt-get -y install axel
+}
+
+#Install Telegram
+function install_telegram {
+    sudo add-apt-repository ppa:atareao/telegram
+    apt_update
+    sudo apt-get -y install telegram
+}
+
 #Install Dropbox
 function install_dropbox {
     dropbox_version="2015.10.28_amd64"
@@ -68,8 +80,8 @@ function install_vim {
 }
 
 #aptupgrade
-function aptupgrade {
-    sudo DEBIAN_FRONTEND=noninteractive aptitude -y dist-upgrade
+function apt_upgrade {
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade
 }
 
 #Java
@@ -85,14 +97,14 @@ function java8 {
 
 #PHP
 function php5 {
-     sudo aptitude install -y php5-curl
+     sudo apt-get install -y php5-curl
 }
 
 #Mysql
 function mysql5 {
     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $1"
     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $1"
-    sudo aptitude -y install mysql-server
+    sudo apt-get -y install mysql-server
 }
 
 #Git
@@ -102,7 +114,7 @@ function install_git {
 
 #Mail
 function mail {
-     sudo DEBIAN_FRONTEND=noninteractive aptitude install -y -q mailutils
+     sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q mailutils
 }
 
 #Node
@@ -156,7 +168,10 @@ function helpmessage {
     echo "$0 --clean_up"
     echo "$0 --apt_update"
     echo "$0 --install_dropbox"
-    echo "$0 [--aptupgrade] [--java8] [--php5] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password] [--awscli] [--arc] "
+    echo "$0 --apt_upgrade"
+    echo "$0 --install_axel"
+    echo "$0 --install_telegram"
+    echo "$0 [--java8] [--php5] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password] [--awscli] [--arc] "
 }
 
 
@@ -165,9 +180,10 @@ while true; do
     --unattended_upgrades ) unattended_upgrades ; shift;break ;;    
     --install_dropbox ) install_dropbox ; shift ; break;;
     --install_vim ) install_vim ; shift ; break;;
+    --install_telegram ) install_telegram ; shift ; break;;
     --clean_up ) clean_up ; shift;break ;;
     --apt_update ) apt_update ; shift ;break;;
-    --aptupgrade ) aptupdate ;  aptupgrade; shift;break ;;
+    --apt_upgrade ) apt_update ;  apt_upgrade; shift;break ;;
     --java8 ) java8 ; shift;break ;;
     --php5 ) php5; shift ;break;;
     --install_git ) install_git; shift; break ;;
@@ -176,6 +192,7 @@ while true; do
     --mail ) mail ; shift;break ;;
     --awscli ) awscli ; shift;break ;;
     --arc ) arc ; shift;break;;
+    --install_axel ) install_axel ; shift;break;;
     --install_google_chrome ) install_google_chrome ;  shift; break ;;
     --mysql5 ) mysql5 "$2"; shift 2;break ;;
     --hostname ) hostname "$2"; shift 2;break ;;
