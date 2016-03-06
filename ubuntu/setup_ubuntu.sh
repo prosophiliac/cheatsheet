@@ -5,6 +5,13 @@ function install_axel {
     sudo apt-get -y install axel
 }
 
+#Install FreeFileSync 
+function install_free_file_sync {
+    sudo add-apt-repository ppa:freefilesync/ffs
+    apt_update
+    sudo apt-get -y install freefilesync
+}
+
 #Install Telegram
 function install_telegram {
     sudo add-apt-repository ppa:atareao/telegram
@@ -171,6 +178,7 @@ function helpmessage {
     echo "$0 --apt_upgrade"
     echo "$0 --install_axel"
     echo "$0 --install_telegram"
+    echo "$0 --install_free_file_sync"
     echo "$0 [--java8] [--php5] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password] [--awscli] [--arc] "
 }
 
@@ -192,6 +200,7 @@ while true; do
     --mail ) mail ; shift;break ;;
     --awscli ) awscli ; shift;break ;;
     --arc ) arc ; shift;break;;
+    --install_free_file_sync ) install_free_file_sync ; shift;break;;
     --install_axel ) install_axel ; shift;break;;
     --install_google_chrome ) install_google_chrome ;  shift; break ;;
     --mysql5 ) mysql5 "$2"; shift 2;break ;;
