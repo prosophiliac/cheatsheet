@@ -1,5 +1,14 @@
 #!/bin/bash
 
+#Install Android Studio
+function install_android_studio {
+    sudo apt-add-repository ppa:paolorotolo/android-studio 
+    apt_update
+    sudo apt-get install android-studio
+
+}
+
+
 #Install Axel
 function install_axel {
     sudo apt-get -y install axel
@@ -92,13 +101,12 @@ function apt_upgrade {
 }
 
 #Java
-function java8 {
+function install_java8 {
     sudo add-apt-repository ppa:webupd8team/java -y
-    aptupdate
+    apt_update
     echo debconf shared/accepted-oracle-license-v1-1 select true | \sudo debconf-set-selections
     echo debconf shared/accepted-oracle-license-v1-1 seen true | \sudo debconf-set-selections
-    sudo apt-get install -y oracle-java8-installer
-    sudo apt-get install -y oracle-java8-set-default
+    sudo apt-get install -y oracle-java8-installer oracle-java8-set-default
 
 }
 
@@ -179,6 +187,8 @@ function helpmessage {
     echo "$0 --install_axel"
     echo "$0 --install_telegram"
     echo "$0 --install_free_file_sync"
+    echo "$0 --install_java8 "
+    echo "$0 --install_android_studio "
     echo "$0 [--java8] [--php5] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password] [--awscli] [--arc] "
 }
 
@@ -192,7 +202,7 @@ while true; do
     --clean_up ) clean_up ; shift;break ;;
     --apt_update ) apt_update ; shift ;break;;
     --apt_upgrade ) apt_update ;  apt_upgrade; shift;break ;;
-    --java8 ) java8 ; shift;break ;;
+    --install_java8 ) install_java8 ; shift;break ;;
     --php5 ) php5; shift ;break;;
     --install_git ) install_git; shift; break ;;
     --node ) node ; shift ;break;;
@@ -202,6 +212,7 @@ while true; do
     --arc ) arc ; shift;break;;
     --install_free_file_sync ) install_free_file_sync ; shift;break;;
     --install_axel ) install_axel ; shift;break;;
+    --install_android_studio ) install_android_studio ; shift;break;;
     --install_google_chrome ) install_google_chrome ;  shift; break ;;
     --mysql5 ) mysql5 "$2"; shift 2;break ;;
     --hostname ) hostname "$2"; shift 2;break ;;
