@@ -1,11 +1,17 @@
 #!/bin/bash
 
+#Glances
+function install_glances {
+    sudo apt-get -y install python-pip build-essential python-dev
+    sudo pip install Glances
+    sudo pip install PySensors
+}
+
 #Install Android Studio
 function install_android_studio {
     sudo apt-add-repository ppa:paolorotolo/android-studio 
     apt_update
-    sudo apt-get install android-studio
-
+    sudo apt-get install android-studio lib32stdc++6
 }
 
 
@@ -75,7 +81,7 @@ function clean_up {
 }
 
 #Hostname
-function hostname {
+function set_hostname {
     echo "$1" | sudo tee /etc/hostname
     echo "127.0.0.1 $1" | sudo tee --append /etc/hosts
 }
@@ -188,8 +194,9 @@ function helpmessage {
     echo "$0 --install_telegram"
     echo "$0 --install_free_file_sync"
     echo "$0 --install_java8 "
-    echo "$0 --install_android_studio "
-    echo "$0 [--java8] [--php5] [--node] [--jhipster] [--mail] [--mysql5 password] [--hostname subdomain.hostname.com] [--sonar password] [--awscli] [--arc] "
+    echo "$0 --install_glances "
+    echo "$0 --install_android_studio"
+    echo "$0 --set_hostname subdomain.hostname.com"
 }
 
 
@@ -214,8 +221,9 @@ while true; do
     --install_axel ) install_axel ; shift;break;;
     --install_android_studio ) install_android_studio ; shift;break;;
     --install_google_chrome ) install_google_chrome ;  shift; break ;;
+    --install_glances ) install_glances ;  shift; break ;;
     --mysql5 ) mysql5 "$2"; shift 2;break ;;
-    --hostname ) hostname "$2"; shift 2;break ;;
+    --set_hostname ) set_hostname "$2"; shift 2;break ;;
     --sonar ) sonar "$2"; shift 2;break ;;
     * ) helpmessage ; break ;;
   esac
