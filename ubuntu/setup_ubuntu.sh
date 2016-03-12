@@ -1,5 +1,27 @@
 #!/bin/bash
 
+#STS 
+function install_sts {
+sts_desktop="\
+[Desktop Entry]
+Name=Spring Tool Suite
+GenericName=IDE
+Exec=/opt/sts-bundle/sts-3.7.3.RELEASE/STS
+TryExec=/opt/sts-bundle/sts-3.7.3.RELEASE/STS
+Icon=/opt/sts-bundle/sts-3.7.3.RELEASE/icon.xpm
+Terminal=false
+Type=Application
+Categories=Programming;"
+    sudo wget http://dist.springsource.com/release/STS/3.7.3.RELEASE/dist/e4.5/spring-tool-suite-3.7.3.RELEASE-e4.5.2-linux-gtk-x86_64.tar.gz -O /opt/spring-tool-suite.tar.gz
+    sudo tar -xvf  /opt/spring-tool-suite.tar.gz -C /opt/
+     echo -e "$sts_desktop" | sudo tee /usr/share/applications/sts.desktop
+}
+
+#GP Rename
+function install_gprename {
+    sudo apt-get -y install gprename
+}
+
 #Glances
 function install_glances {
     sudo apt-get -y install python-pip build-essential python-dev
@@ -197,6 +219,8 @@ function helpmessage {
     echo "$0 --install_glances "
     echo "$0 --install_android_studio"
     echo "$0 --set_hostname subdomain.hostname.com"
+    echo "$0 --install_gprename"
+    echo "$0 --install_sts"
 }
 
 
@@ -216,7 +240,8 @@ while true; do
     --jhipster ) jhipster ; shift ;break;;
     --mail ) mail ; shift;break ;;
     --awscli ) awscli ; shift;break ;;
-    --arc ) arc ; shift;break;;
+    --install_sts ) install_sts ; shift;break;;
+    --install_gprename ) install_gprename ; shift;break;;
     --install_free_file_sync ) install_free_file_sync ; shift;break;;
     --install_axel ) install_axel ; shift;break;;
     --install_android_studio ) install_android_studio ; shift;break;;
