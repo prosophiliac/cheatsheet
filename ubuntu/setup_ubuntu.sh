@@ -153,6 +153,9 @@ function mysql5 {
 #Git
 function install_git {
     sudo apt-get install -y git
+    git config --global credential.helper cache
+    git config --global credential.helper "cache --timeout=86400"
+ 
 }
 
 #Mail
