@@ -164,8 +164,8 @@ function mail {
 }
 
 #Node
-function node {
-  NPMVersion="v5.0.0";
+function install_node {
+  NPMVersion="v5.11.0";
   wget  "http://nodejs.org/dist/$NPMVersion/node-$NPMVersion-linux-x64.tar.gz" -P "$HOME"
   tar -xzvf "$HOME/node-$NPMVersion-linux-x64.tar.gz" -C "$HOME"
   rm "$HOME/node-$NPMVersion-linux-x64.tar.gz"
@@ -176,7 +176,7 @@ function node {
 }
 
 #JHipster
-function jhipster {
+function install_jhipster {
   npm install -g yo
   npm install -g bower
   npm install -g grunt-cli
@@ -224,6 +224,8 @@ function helpmessage {
     echo "$0 --set_hostname subdomain.hostname.com"
     echo "$0 --install_gprename"
     echo "$0 --install_sts"
+    echo "$0 --install_node"
+    echo "$0 --install_jhipster"
 }
 
 
@@ -239,8 +241,8 @@ while true; do
     --install_java8 ) install_java8 ; shift;break ;;
     --php5 ) php5; shift ;break;;
     --install_git ) install_git; shift; break ;;
-    --node ) node ; shift ;break;;
-    --jhipster ) jhipster ; shift ;break;;
+    --install_node ) install_node ; shift ;break;;
+    --install_jhipster ) install_jhipster ; shift ;break;;
     --mail ) mail ; shift;break ;;
     --awscli ) awscli ; shift;break ;;
     --install_sts ) install_sts ; shift;break;;
