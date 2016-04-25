@@ -194,6 +194,12 @@ function arc {
     echo "export PATH=$HOME/ben10/arcanist/bin:$PATH" >> "$HOME/.bashrc"
 }
 
+#Vagrant
+function install_vagrant {
+    wget "https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.deb" -P "$HOME"
+    sudo dpkg -i "$HOME/vagrant_1.8.1_x86_64.deb"
+}
+
 #GoogleChrome
 function install_google_chrome {
     if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then 
@@ -226,6 +232,7 @@ function helpmessage {
     echo "$0 --install_sts"
     echo "$0 --install_node"
     echo "$0 --install_jhipster"
+    echo "$0 --install_vagrant"
 }
 
 
@@ -245,6 +252,7 @@ while true; do
     --install_jhipster ) install_jhipster ; shift ;break;;
     --mail ) mail ; shift;break ;;
     --awscli ) awscli ; shift;break ;;
+    --install_vagrant ) install_vagrant ; shift;break ;;
     --install_sts ) install_sts ; shift;break;;
     --install_gprename ) install_gprename ; shift;break;;
     --install_free_file_sync ) install_free_file_sync ; shift;break;;
