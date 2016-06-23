@@ -1,5 +1,13 @@
 #!/bin/bash
 
+#Sublime
+function install_sublime3 {
+    sudo sudo add-apt-repository -y ppa:webupd8team/sublime-text-3
+    apt_update
+    sudo apt-get install sublime-text-installer 
+}
+
+
 #STS 
 function install_sts {
 sts_desktop="\
@@ -233,6 +241,7 @@ function helpmessage {
     echo "$0 --install_node"
     echo "$0 --install_jhipster"
     echo "$0 --install_vagrant"
+    echo "$0 --install_sublime3"
 }
 
 
@@ -260,6 +269,7 @@ while true; do
     --install_android_studio ) install_android_studio ; shift;break;;
     --install_google_chrome ) install_google_chrome ;  shift; break ;;
     --install_glances ) install_glances ;  shift; break ;;
+    --install_sublime3 ) install_sublime3 ; shift; break;;
     --mysql5 ) mysql5 "$2"; shift 2;break ;;
     --set_hostname ) set_hostname "$2"; shift 2;break ;;
     --sonar ) sonar "$2"; shift 2;break ;;
