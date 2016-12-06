@@ -173,7 +173,7 @@ function mail {
 
 #Node
 function install_node {
-  NPMVersion="v6.2.1";
+  NPMVersion="v6.9.1";
   wget  "http://nodejs.org/dist/$NPMVersion/node-$NPMVersion-linux-x64.tar.gz" -P "$HOME"
   tar -xzvf "$HOME/node-$NPMVersion-linux-x64.tar.gz" -C "$HOME"
   rm "$HOME/node-$NPMVersion-linux-x64.tar.gz"
